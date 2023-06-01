@@ -1,4 +1,4 @@
-#CRIACAO TABELA RESPONSAVEL#
+################################################################################## CRIACAO TABELA RESPONSAVEL ######################################################################################
 create table responsavel (
 	id bigint not null auto_increment,
     responsavel_fk bigint not null,
@@ -6,17 +6,17 @@ create table responsavel (
     foreign key (responsavel_fk) references usuarios(id)
 );
 
-#INSERCAO DE DADOS DA TABELA RESPONSAVEL#
+############################################################################## INSERCAO DE DADOS DA TABELA RESPONSAVEL #############################################################################
 insert into responsavel (responsavel_fk) values 
 (1), (2),(3);
 
 insert into responsavel (responsavel_fk) values 
 (1), (2),(3);
 
-#CRIACAO TABELA TAREFA#
+##################################################################################### CRIACAO TABELA TAREFA ########################################################################################
 create table tarefa (
 	id bigint not null auto_increment,
-    titulo varchar(125) not null,
+    titulo varchar(50) not null,
     descrisao varchar(500) not null,
 	usuarioFk bigint not null,
     responsavel_fk bigint not null,
@@ -29,7 +29,7 @@ create table tarefa (
     foreign key(locais_FK) references locais(id)
 );
 
-#INSERCAO DE DADOS DA TABELA TAREFA#
+############################################################################### INSERCAO DE DADOS DA TABELA TAREFA #################################################################################
 insert into tarefa (titulo,descrisao,usuarioFk,responsavel_fk,prazo,locais_FK,imagens) values
 ('computador','sem cabos',1,2,'2023-05-10',1,'imagem 1'),
 ('computador','quebrado',6,1,'2023-06-10',2,'imagem 2'),
@@ -45,25 +45,25 @@ insert into tarefa (titulo,descrisao,usuarioFk,responsavel_fk,prazo,locais_FK,im
 ('ar condicionado','tomada',4,3,'2023-03-22',5,'imagem 10');
 
 
-#CRIACAO TABELA STATUS#
+########################################################################################### CRIACAO TABELA STATUS ##################################################################################
 create table status (
 	id bigint not null auto_increment,
-    name varchar(125) not null,
+    name varchar(100) not null,
     primary key(id)
     );
     
-    #INSERCAO DE DADOS DA TABELA STATUS#
+    ########################################################################### INSERCAO DE DADOS DA TABELA STATUS #################################################################################
     insert into status (name) values
 ('aberta'),('Em andamento'),('Concluida'),('Encerrada');
 
-    #CRIACAO TABELA IMAGENS_STATUS#
+    ################################################################################## CRIACAO TABELA IMAGENS_STATUS ###############################################################################
     create table imagens_status (
 	id bigint not null auto_increment,
     image mediumtext,
     primary key(id)
     );
     
-    #INSERCAO DE DADOS DA TABELA IMAGENS_STATUS#
+    ######################################################################### INSERCAO DE DADOS DA TABELA IMAGENS_STATUS ###########################################################################
     insert into imagens_status (image) values
 ('imagem 11'),
 ('imagem 12'),
@@ -71,10 +71,10 @@ create table status (
 ('imagem 14');
 
 
-    #CRIACAO TABELA PROGRESOS#
+    ##################################################################################### CRIACAO TABELA PROGRESOS #################################################################################
     create table progressos (
 	id bigint not null auto_increment,
-    descrisao varchar(125) not null,
+    descrisao varchar(100) not null,
     data datetime not null,
     imagens_status_FK bigint not null,
     tarefa_FK bigint not null,
@@ -85,7 +85,7 @@ create table status (
     foreign key(imagens_status_FK) references imagens_status(id)
 );
 
-#INSERCAO DE DADOS DA TABELA PROGRASSOS#
+########################################################################## INSERCAO DE DADOS DA TABELA PROGRASSOS ##################################################################################
 
 insert into progressos (descrisao,data,imagens_status_FK,tarefa_FK,status_FK) values
 ('pronto','2023-01-30',1,1,1),
@@ -102,34 +102,42 @@ insert into progressos (descrisao,data,imagens_status_FK,tarefa_FK,status_FK) va
 ('finalizando','2023-10-18',3,8,1);
 
 
-#CAMPO DE PESQUISAS#
+################################################################################### CAMPO DE PESQUISAS #############################################################################################
 
-#PESQUISA 1#
+#Crie uma consulta que mostre todas as tarefas ainda não iniciadas com as informações de seus respectivos envolvidos no processo;#
 select * from tarefa where id not in
 (select t.id from tarefa t join progressos ts on t.id = ts.tarefa_fk);
 
-#PESQUISA 2#
+
+#Crie uma consulta que mostre todos os locais que tiveram associação a mais de duas tarefas;#
 select l.*, count(*) from locais l join
 tarefa t on l.id = t.locais_FK group by t.locais_FK having count(l.id)>2;
 
-#PESQUISA 3#
+
+#Crie uma consulta que mostre todos os usuários que tiveram associação a duas tarefas no mínimo;#
 select u.*,count(*) from tarefa t join responsavel r on t.id = r.responsavel_fk join usuarios u on r.responsavel_FK = u.id group by u.id having count(u.id)>=2;
 
-#PESQUISA 4#
+
+#Crie uma consulta que mostre todos eventos que ainda acontecerão e as tarefas que ainda não foram executadas nos locais destes eventos (essa consulta ajudará a gestão visualizar se há algum problema que pode impactar os eventos);#
 select e.*,t.* from tarefa t join locais l on t.locais_FK = l.id join eventos e on l.id = e.localFk join progressos ts on t.id = ts.tarefa_fk
 where e.inicio > now() and ts.status_FK != '4' group by e.id,t.id;
 
-#PESQUISA 5#
+
+#Crie uma consulta que mostre os locais e a quantidade de tarefas existentes (independente do status);#
 select l.*, count(*) from locais l join tarefa t on l.id = t.locais_FK group by l.id;
 
-#PESQUISA 6#
+
+#Crie uma consulta que mostre os locais e a quantidade de tarefas concluídas;#
 select l.*, count(*) from locais l join tarefa t on l.id = t.locais_FK join progressos ts on t.id = ts.tarefa_fk where ts.status_FK = 4 group by l.id;
 
-#PESQUISA 7#
+
+#Crie uma consulta que mostre os usuários e quantas tarefas possuem atribuídas (independente do status);#
 select u.*,count(*) from usuarios u join responsavel tr on u.id = tr.responsavel_fk group by u.id;
 
-#PESQUISA 8#
+
+#Crie uma consulta que mostre os usuários e quantas tarefas possuem atribuídas concluídas;#
 select u.*,count(*) from usuarios u join responsavel tr on u.id = tr.responsavel_fk join tarefa t on tr.responsavel_fk = t.id join progressos ts on t.id = ts.tarefa_fk where ts.status_fk = '4' group by u.id;
 
-#PESQUISA 9#
+
+#Crie uma consulta que mostre os usuários e quantas tarefas possuem atribuídas concluídas; • Crie uma consulta que mostre a média por mês de quantas tarefas são criadas por local;#
 select *, AVG(d.qnt) from locais l join (select locais_FK, month(prazo)as mes,count(*) as qnt from tarefa group by mes,locais_FK) d on l.id = d.locais_FK group by d.mes,l.id;
