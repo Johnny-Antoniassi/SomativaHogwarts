@@ -1,3 +1,4 @@
 Nome do servidor: somativahogwarts.mysql.database.azure.com
 Nome de início de sessão: root123456
 Senha: Somativahogwarts@123456
+Link: mysql -h somativahogwarts.mysql.database.azure.com -u root123456 -p '--ssl-ca=DigiCertGlobalRootCA.crt.pem'
