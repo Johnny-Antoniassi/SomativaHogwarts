@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `tarefa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarefa` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(50) NOT NULL,
-  `descrisao` varchar(500) NOT NULL,
+  `titulo` varchar(35) NOT NULL,
+  `descrisao` varchar(450) NOT NULL,
   `usuarioFk` bigint NOT NULL,
   `responsavel_fk` bigint NOT NULL,
   `prazo` date NOT NULL,
