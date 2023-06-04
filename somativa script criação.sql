@@ -242,7 +242,7 @@ DROP TABLE IF EXISTS `progressos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `progressos` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `descrisao` varchar(100) NOT NULL,
+  `descrisao` varchar(135) NOT NULL,
   `data` datetime NOT NULL,
   `imagens_status_FK` bigint NOT NULL,
   `tarefa_FK` bigint NOT NULL,
@@ -302,7 +302,7 @@ DROP TABLE IF EXISTS `status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(135) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -326,8 +326,8 @@ DROP TABLE IF EXISTS `tarefa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarefa` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(50) NOT NULL,
-  `descrisao` varchar(500) NOT NULL,
+  `titulo` varchar(35) NOT NULL,
+  `descrisao` varchar(450) NOT NULL,
   `usuarioFk` bigint NOT NULL,
   `responsavel_fk` bigint NOT NULL,
   `prazo` date NOT NULL,
