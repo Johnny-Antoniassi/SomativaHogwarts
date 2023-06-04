@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `progressos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `progressos` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `descrisao` varchar(100) NOT NULL,
+  `descrisao` varchar(135) NOT NULL,
   `data` datetime NOT NULL,
   `imagens_status_FK` bigint NOT NULL,
   `tarefa_FK` bigint NOT NULL,
